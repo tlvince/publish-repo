@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-error() { echo "$0: $1" && exit 1; }
+info() { echo "$0: $1"; }
+warn() { info "$1" && exit; }
+error() { info "$1" && exit 1; }
 
 TRAVIS="${TRAVIS:-}"
 TRAVIS_TAG="${TRAVIS_TAG:-}"
@@ -9,8 +11,8 @@ TRAVIS_PULL_REQUEST="${TRAVIS_PULL_REQUEST:-}"
 CI_USER_TOKEN="${CI_USER_TOKEN:-}"
 
 [[ "$TRAVIS" ]] || error "Please run this script in TravisCI"
-[[ "$TRAVIS_TAG" ]] || error "Only deploying tagged builds"
-[[ "$TRAVIS_PULL_REQUEST" == "false" ]] || error "Not deploying pull requests"
+[[ "$TRAVIS_TAG" ]] || warn "Only deploying tagged builds"
+[[ "$TRAVIS_PULL_REQUEST" == "false" ]] || warn "Not deploying pull requests"
 [[ "$CI_USER_TOKEN" ]] || error "Please set CI_USER_TOKEN"
 
 publish_repo="$1"
