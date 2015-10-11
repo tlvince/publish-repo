@@ -1,7 +1,10 @@
 const parseAuthor = require('parse-author')
 
 export default (flags, pkg) => {
-  let author = {}
+  let author = {
+    name: flags.authorName,
+    email: flags.authorEmail
+  }
 
   function throwAuthorError () {
     const messages = [
@@ -12,35 +15,38 @@ export default (flags, pkg) => {
     throw new Error(messages)
   }
 
-  if (flags.authorName) {
-    author.name = flags.authorName
-  }
+  function parse (section) {
+    if (!section.author) {
+      return
+    }
 
-  if (flags.authorEmail) {
-    author.email = flags.authorEmail
+    const parsed = parseAuthor(section.author)
+
+    if (!author.name && parsed.name) {
+      author.name = parsed.name
+    }
+
+    if (!author.email && parsed.email) {
+      author.email = parsed.email
+    }
+
+    return author
   }
 
   if (author.name && author.email) {
     return author
   }
 
-  if (!pkg.author) {
-    throwAuthorError()
+  if (pkg.publishRepo) {
+    let parsed = parse(pkg.publishRepo)
+    if (parsed && parsed.name && parsed.email) {
+      return parsed
+    }
   }
 
-  let parsed = {} // eslint-disable-line
-  if (pkg.author) {
-    parsed = parseAuthor(pkg.author)
-  }
-
-  if (!author.name && author.email && parsed.name) {
-    author.name = parsed.name
-    return author
-  }
-
-  if (!author.email && author.name && parsed.email) {
-    author.email = parsed.email
-    return author
+  let parsed = parse(pkg)
+  if (parsed && parsed.name && parsed.email) {
+    return parsed
   }
 
   throwAuthorError()

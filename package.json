@@ -10,7 +10,8 @@
     "pretest": "standard",
     "test": "exit",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "watch": "CI_USER_TOKEN=test nodemon cli.js --repository-url https://my.git --artefacts a,b --author-name name --author-email name@example.com"
+    "prewatch": "rimraf dist",
+    "watch": "CI_USER_TOKEN=test nodemon cli.js --repository-url https://my.git --artefacts a,b"
   },
   "repository": {
     "type": "git",
@@ -40,5 +41,8 @@
   "dependencies": {
     "meow": "^3.4.2",
     "parse-author": "^0.2.0"
+  },
+  "publishRepo": {
+    "author": "name"
   }
 }
