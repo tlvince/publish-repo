@@ -103,7 +103,8 @@ Don't forget to pass `--author-name` and `--author-email`.
 
 ### `--repository-url`
 
-The repository to push artefacts to. Must already exist.
+The repository to push artefacts to. Must already exist. Defaults to
+`publishRepo.repository.url`.
 
 ### `--artefacts`
 
