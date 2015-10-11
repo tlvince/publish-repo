@@ -21,7 +21,7 @@ artefacts="${@:4}"
 tmp="$(mktemp -d "${TMPDIR:-/tmp}"/publish-repo.XXXX)"
 
 git clone "$publish_repo" "$tmp"
-mv "$artefacts" "$tmp"
+mv $artefacts "$tmp"
 cd "$tmp"
 git add .
 git config user.name "$user_name"
