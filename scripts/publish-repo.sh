@@ -7,21 +7,18 @@ error() { info "$1" && exit 1; }
 
 TRAVIS="${TRAVIS:-}"
 TRAVIS_TAG="${TRAVIS_TAG:-}"
-TRAVIS_BRANCH="${TRAVIS_BRANCH:-}"
 TRAVIS_PULL_REQUEST="${TRAVIS_PULL_REQUEST:-}"
 CI_USER_TOKEN="${CI_USER_TOKEN:-}"
 
-publish_repo="$1"
-branch="$2"
-user_name="$3"
-user_email="$4"
-artefacts="${@:5}"
-
 [[ "$TRAVIS" ]] || error "Please run this script in TravisCI"
 [[ "$TRAVIS_TAG" ]] || warn "Only deploying tagged builds"
-[[ "$TRAVIS_BRANCH" == "$branch" ]] || warn "Branch is not $branch"
 [[ "$TRAVIS_PULL_REQUEST" == "false" ]] || warn "Not deploying pull requests"
 [[ "$CI_USER_TOKEN" ]] || error "Please set CI_USER_TOKEN"
+
+publish_repo="$1"
+user_name="$2"
+user_email="$3"
+artefacts="${@:4}"
 
 tmp="$(mktemp -d "${TMPDIR:-/tmp}"/publish-repo.XXXX)"
 

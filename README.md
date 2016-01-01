@@ -121,11 +121,6 @@ The commit's author name (`git config user.name`). Defaults to
 The commit's author email (`git config user.email`). Defaults to
 `publishRepo.author`. Falls back to `.package.json` `author`.
 
-### `--branch`
-
-The branch that triggers publish-repo. Defaults to `publishRepo.branch`. Falls
-back to `master`.
-
 ## See also
 
 * [publish-dist](https://www.npmjs.com/package/publish-dist)
