@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euxo pipefail
+set -euo pipefail
 
 info() { echo "$0: $1"; }
 warn() { info "$1" && exit; }

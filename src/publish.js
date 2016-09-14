@@ -14,7 +14,6 @@ export default (args) => {
 
   const script = `${__dirname}/../scripts/publish-repo.sh`
   const cmd = `${script} "${repo}" "${author.name}" "${author.email}" ${artefacts}`
-  console.log(`executing "${cmd}"`)
   exec(cmd, (err, stdout, stderr) => {
     if (stdout) {
       console.log(stdout)
