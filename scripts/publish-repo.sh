@@ -24,6 +24,7 @@ tmp="$(mktemp -d "${TMPDIR:-/tmp}"/publish-repo.XXXX)"
 
 echo -e "machine github.com\n  login $CI_USER_TOKEN\n" >> ~/.netrc
 git clone "$publish_repo" "$tmp"
+cd "$tmp" && rm -rf $artefacts && cd -
 mv $artefacts "$tmp"
 cd "$tmp"
 git add .
