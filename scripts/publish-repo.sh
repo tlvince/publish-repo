@@ -22,6 +22,7 @@ artefacts="${@:4}"
 
 tmp="$(mktemp -d "${TMPDIR:-/tmp}"/publish-repo.XXXX)"
 
+echo -e "machine github.com\n  login $CI_USER_TOKEN\n" >> ~/.netrc
 git clone "$publish_repo" "$tmp"
 mv $artefacts "$tmp"
 cd "$tmp"
@@ -30,7 +31,6 @@ git config user.name "$user_name"
 git config user.email "$user_email"
 git commit --all --message "$TRAVIS_TAG"
 git tag "$TRAVIS_TAG"
-echo -e "machine github.com\n  login $CI_USER_TOKEN\n" >> ~/.netrc
 git push --tags origin master
 cd -
 rm -rf "$tmp"
